@@ -14,6 +14,6 @@ FOUNDATION_EXPORT double SteamKitVersionNumber;
 //! Project version string for SteamKit.
 FOUNDATION_EXPORT const unsigned char SteamKitVersionString[];
 
-//#import "SteamUser.h"
-//#import "SteamLoginVC.h"
+#import "SteamUser.h"
+#import "SteamLoginVC.h"
 
