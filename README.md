@@ -1,6 +1,8 @@
 # SteamLogin
 
-[![CI Status](http://img.shields.io/travis/serhii-londar/SteamLogin.svg?style=flat)](https://travis-ci.org/serhii-londar/SteamLogin)
+Steam library for login user and retreive steam user id. Written in pure swift and support iOS 9 and more.
+
+[![CIStatus](http://img.shields.io/travis/serhii-londar/SteamLogin.svg?style=flat)](https://travis-ci.org/serhii-londar/SteamLogin)
 [![Version](https://img.shields.io/cocoapods/v/SteamLogin.svg?style=flat)](http://cocoapods.org/pods/SteamLogin)
 [![License](https://img.shields.io/cocoapods/l/SteamLogin.svg?style=flat)](http://cocoapods.org/pods/SteamLogin)
 [![Platform](https://img.shields.io/cocoapods/p/SteamLogin.svg?style=flat)](http://cocoapods.org/pods/SteamLogin)
