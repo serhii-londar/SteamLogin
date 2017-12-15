@@ -1,16 +1,16 @@
 platform :ios, '9.0'
 
-workspace 'SteamKit'
-project 'SteamKit.xcodeproj'
-project 'SteamKitExample.xcodeproj'
+use_frameworks!
 
-target 'SteamKit' do
-  pod 'RMMapper'
-  pod 'AFNetworking'
-  project 'SteamKit.xcodeproj'
+workspace 'SteamLogin'
+project 'SteamLogin.xcodeproj'
+project 'Example.xcodeproj'
+
+target 'SteamLogin' do
+  project 'SteamLogin.xcodeproj'
 end
 
-target 'SteamKitExample' do
-    pod 'SteamKit', :path => 'SteamKit.podspec'
-    project 'SteamKitExample.xcodeproj'
+target 'Example' do
+    pod 'SteamLogin', :path => 'SteamLogin.podspec'
+    project 'Example.xcodeproj'
 end
