@@ -1,5 +1,5 @@
 //
-//	Response.swift
+//	SteamVanityResponse.swift
 //
 //	Create by Serhii Londar on 15/12/2017
 //	Copyright © 2017 Techmagic. All rights reserved.
@@ -7,18 +7,15 @@
 
 import Foundation
 
-struct SteamVanityResponse : Codable {
-	let steamid : String?
-	let success : Int?
-
-	enum CodingKeys: String, CodingKey {
-		case steamid
-		case success
-	}
+struct SteamVanity : Codable {
+	let response : SteamVanityResponse?
     
-	init(from decoder: Decoder) throws {
+	enum CodingKeys: String, CodingKey {
+		case response
+	}
+	
+    init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		steamid = try values.decodeIfPresent(String.self, forKey: .steamid)
-		success = try values.decodeIfPresent(Int.self, forKey: .success)
+        response = try values.decodeIfPresent(SteamVanityResponse.self, forKey: .response)
 	}
 }

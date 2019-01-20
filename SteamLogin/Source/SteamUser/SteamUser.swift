@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SteamUser {
+public class SteamUser: NSObject, NSCoding {
     public var steamID64: String?
     public var steamID32: String?
     public var steamVanityID: String?
@@ -26,5 +26,35 @@ public class SteamUser {
         self.steamVanityID = steamVanityID
         steamID64 = String.convertVanityID(toSteamID64: steamVanityID)
         steamID32 = String.convertSteamID64(toSteamID32: steamID64!)
+    }
+    
+    public func encode(with encoder: NSCoder) {
+        encoder.encode(steamID64, forKey: "steamID64")
+        encoder.encode(steamID32, forKey: "steamID32")
+        encoder.encode(steamVanityID, forKey: "steamVanityID")
+    }
+    
+    required convenience public init?(coder aDecoder: NSCoder) {
+        let steamID32 = aDecoder.decodeObject(forKey: "steamID32") as? String ?? ""
+        self.init(steamID32: steamID32)
+        self.steamID64 = aDecoder.decodeObject(forKey: "steamID64") as? String
+        self.steamID32 = aDecoder.decodeObject(forKey: "steamID32") as? String
+        self.steamVanityID = aDecoder.decodeObject(forKey: "steamVanityID") as? String
+    }
+}
+
+extension SteamUser {
+    public static func loadUser() -> SteamUser? {
+        let defaults = UserDefaults.standard
+        let encodedObject = defaults.object(forKey: "SteamUser") as? Data
+        let object = NSKeyedUnarchiver.unarchiveObject(with: encodedObject ?? Data()) as? SteamUser
+        return object
+    }
+    
+    public func save() {
+        let encodedObject = NSKeyedArchiver.archivedData(withRootObject: self)
+        let defaults = UserDefaults.standard
+        defaults.set(encodedObject, forKey: "SteamUser")
+        defaults.synchronize()
     }
 }

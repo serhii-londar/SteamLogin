@@ -34,7 +34,6 @@ public class SteamLoginVC: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-            // Do any additional setup after loading the view from its nib.
         let lCancel = UIButton()
         lCancel.setTitle("Cancel", for: .normal)
         lCancel.sizeToFit()
@@ -50,7 +49,7 @@ public class SteamLoginVC: UIViewController {
 }
 
 extension SteamLoginVC: UIWebViewDelegate {
-    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         if ((request.url?.absoluteString as NSString?)?.range(of: "steamcommunity.com/profiles/"))?.location != NSNotFound {
             let urlComponents = request.url?.absoluteString.components(separatedBy: "/")
             let potentialID: String = urlComponents![4]
@@ -67,14 +66,6 @@ extension SteamLoginVC: UIWebViewDelegate {
             return false
         }
         return true
-    }
-    
-    public func webViewDidStartLoad(_ webView: UIWebView) {
-        
-    }
-    
-    public func webViewDidFinishLoad(_ webView: UIWebView) {
-        
     }
     
     public func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {

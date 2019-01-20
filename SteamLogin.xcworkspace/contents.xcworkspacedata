@@ -5,9 +5,6 @@
       location = "group:Example.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/serhiilondar/Documents/GitHub/steamkit/SteamLogin.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef

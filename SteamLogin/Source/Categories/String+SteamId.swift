@@ -8,7 +8,7 @@
 
 import Foundation
 
-private var STEAM_VANITY_ID_DECODE_URL = "http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=160A1E87653E30D9562DE9E5A47386E5&vanityurl="
+private var STEAM_VANITY_ID_DECODE_URL = "https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=\(SteamLogin.steamApiKey)&vanityurl="
 
 private let STEAMID64_IDENTIFIER: Int64 = 76561197960265728
 

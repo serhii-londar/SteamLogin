@@ -13,15 +13,21 @@ class ViewController: UIViewController {
     var steamUser: SteamUser? = nil
     
     override func viewDidAppear(_ animated: Bool) {
+        SteamLogin.steamApiKey = "160A1E87653E30D9562DE9E5A47386E5"
+        self.steamUser = SteamUser.loadUser()
         if steamUser == nil {
             SteamLoginVC.login(from: self) { [weak self] (user, error) in
+                guard let self = self else { return }
                 if let user = user {
-                    self?.steamUser = user
-                    self?.perform(#selector(self?.showSuccessAlert), with: nil, afterDelay: 1)
+                    self.steamUser = user
+                    self.steamUser?.save()
+                    self.perform(#selector(self.showSuccessAlert), with: nil, afterDelay: 1)
                 } else {
-                    self?.showErrorAlert(error)
+                    self.showErrorAlert(error)
                 }
             }
+        } else {
+            self.perform(#selector(self.showSuccessAlert), with: nil, afterDelay: 1)
         }
     }
     
