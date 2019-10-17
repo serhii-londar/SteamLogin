@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import WebKit
 
 public typealias SteamLoginVCHandler = (_ user: SteamUser?, _ error: Error?) -> Void
 
 private let STEAM_MOBILE_LOGIN_URL = "https://steamcommunity.com/mobilelogin"
 
 public class SteamLoginVC: UIViewController {
-    @IBOutlet var loginWebView: UIWebView!
+    var loginWebView: WKWebView!
     
     var loginHandler: SteamLoginVCHandler
     
@@ -25,10 +26,10 @@ public class SteamLoginVC: UIViewController {
     
     public init(loginHandler: @escaping SteamLoginVCHandler) {
         self.loginHandler = loginHandler
-        super.init(nibName: "SteamLoginVC", bundle: Bundle(for: SteamLoginVC.self))
+        super.init(nibName: nil, bundle: nil)
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -39,8 +40,9 @@ public class SteamLoginVC: UIViewController {
         lCancel.sizeToFit()
         lCancel.addTarget(self, action: #selector(self.cancel), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: lCancel)
-        loginWebView.delegate = self
-        loginWebView.loadRequest(URLRequest(url: URL(string: STEAM_MOBILE_LOGIN_URL)!))
+        loginWebView = WKWebView(frame: self.view.frame)
+        loginWebView.navigationDelegate = self
+        loginWebView.load(URLRequest(url: URL(string: STEAM_MOBILE_LOGIN_URL)!))
     }
     
     @objc public func cancel(_ sender: Any) {
@@ -48,27 +50,24 @@ public class SteamLoginVC: UIViewController {
     }
 }
 
-extension SteamLoginVC: UIWebViewDelegate {
-    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
-        if ((request.url?.absoluteString as NSString?)?.range(of: "steamcommunity.com/profiles/"))?.location != NSNotFound {
-            let urlComponents = request.url?.absoluteString.components(separatedBy: "/")
+extension SteamLoginVC: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let url = navigationAction.request.url
+        if ((url?.absoluteString as NSString?)?.range(of: "steamcommunity.com/profiles/"))?.location != NSNotFound {
+            let urlComponents = url?.absoluteString.components(separatedBy: "/")
             let potentialID: String = urlComponents![4]
             let lUser = SteamUser(steamID64: potentialID)
             loginHandler(lUser, nil)
             dismiss(animated: true, completion: nil)
-            return false
-        } else if ((request.url?.absoluteString as NSString?)?.range(of: "steamcommunity.com/id/"))?.location != NSNotFound {
-            let urlComponents = request.url?.absoluteString.components(separatedBy: "/")
+            decisionHandler(.cancel)
+        } else if ((url?.absoluteString as NSString?)?.range(of: "steamcommunity.com/id/"))?.location != NSNotFound {
+            let urlComponents = url?.absoluteString.components(separatedBy: "/")
             let potentialVanityID: String = urlComponents![4]
             let lUser = SteamUser(steamVanityID: potentialVanityID)
             loginHandler(lUser, nil)
             dismiss(animated: true, completion: nil)
-            return false
+            decisionHandler(.cancel)
         }
-        return true
-    }
-    
-    public func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-//        loginHandler(nil, error)
+        decisionHandler(.allow)
     }
 }
