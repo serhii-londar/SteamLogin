@@ -17,6 +17,5 @@ Pod::Spec.new do |spec|
   spec.license          = { :type => 'MIT', :file => 'LICENSE' }
   spec.subspec 'Login' do |sp|
     sp.source_files = 'SteamLogin/Source/**/*.swift'
-    sp.resources = 'SteamLogin/Source/SteamLoginVC/*.xib'
   end
 end
