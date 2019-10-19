@@ -3,7 +3,7 @@ Pod::Spec.new do |spec|
   spec.author       = 'Serhii Londar'
   spec.license      = { :type => 'MIT' }
   spec.homepage     = 'https://github.com/serhii-londar/SteamLogin.git'
-  spec.version      = '0.1.3'
+  spec.version      = '0.1.4'
   spec.summary      = 'Steam library for login user and retreive steam user id.'
   spec.source       = { :git => 'https://github.com/serhii-londar/SteamLogin.git', :tag => spec.version }
   spec.ios.deployment_target = '9.0'
