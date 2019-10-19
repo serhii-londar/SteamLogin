@@ -44,10 +44,10 @@ public class SteamUser: NSObject, NSCoding {
 }
 
 extension SteamUser {
-    public static func loadUser() -> SteamUser? {
+    public static func load() -> SteamUser? {
         let defaults = UserDefaults.standard
-        let encodedObject = defaults.object(forKey: "SteamUser") as? Data
-        let object = NSKeyedUnarchiver.unarchiveObject(with: encodedObject ?? Data()) as? SteamUser
+        guard let encodedObject = defaults.data(forKey: "SteamUser") else { return nil }
+        let object = NSKeyedUnarchiver.unarchiveObject(with: encodedObject) as? SteamUser 
         return object
     }
     
