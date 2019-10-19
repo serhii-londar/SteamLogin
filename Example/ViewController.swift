@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         SteamLogin.steamApiKey = "160A1E87653E30D9562DE9E5A47386E5"
-        self.steamUser = SteamUser.loadUser()
+        self.steamUser = SteamUser.load()
         if steamUser == nil {
             SteamLoginVC.login(from: self) { [weak self] (user, error) in
                 guard let self = self else { return }
