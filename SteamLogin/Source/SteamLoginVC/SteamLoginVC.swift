@@ -11,7 +11,7 @@ import WebKit
 
 public typealias SteamLoginVCHandler = (_ user: SteamUser?, _ error: Error?) -> Void
 
-private let STEAM_MOBILE_LOGIN_URL = "https://steamcommunity.com/mobilelogin"
+private let STEAM_MOBILE_LOGIN_URL = "https://steamcommunity.com/login/home/?goto=%2Fmy%2Fgoto"
 public let defaultNavigationBarColor = UIColor(red: 23.0 / 255.0, green: 26.0 / 255.0, blue: 32.0 / 255.0, alpha: 1.0)
 
 public class SteamLoginVC: UIViewController {
